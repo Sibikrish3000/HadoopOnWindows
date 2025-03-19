@@ -82,7 +82,7 @@ function Install-Hadoop {
         tar -xvf $hadoopArchive -C "C:\"
         Rename-Item -Path "C:\hadoop-2.9.2" -NewName "C:\hadoop"
 
-        New-Item -ItemType Directory -Path "C:\hadoop\data\datanode","C:\hadoop\data\namenode" -Force
+        # New-Item -ItemType Directory -Path "C:\hadoop\data\datanode","C:\hadoop\data\namenode" -Force
 
         Write-Output "Hadoop 2.9.2 Installed!"
     } else {
@@ -162,7 +162,24 @@ function Set-EnvVars {
 
     Write-Output "Environment variables set! Restart your system to apply changes."
 }
+function Format-NameNode {
+    # Create necessary directories if they do not exist
+    $namenodeDir = "C:\hadoop\data\namenode"
+    $datanodeDir = "C:\hadoop\data\datanode"
 
+    if (!(Test-Path $namenodeDir)) {
+        New-Item -ItemType Directory -Path $namenodeDir -Force
+    }
+    if (!(Test-Path $datanodeDir)) {
+        New-Item -ItemType Directory -Path $datanodeDir -Force
+    }
+    # Format the NameNode
+    Write-Host "Formatting Hadoop NameNode..."
+    Start-Process -NoNewWindow -Wait -FilePath "hdfs" -ArgumentList "namenode -format"
+
+    Write-Host "NameNode formatted successfully!"
+
+}
 
 # Run installation steps
 Install-JDK
@@ -170,6 +187,7 @@ Install-Hadoop
 Install-Winutils
 Copy-HadoopConfig
 Set-EnvVars
+Format-NameNode
 # Set-HadoopEnv
 
 Write-Output "Installation complete! Restart your system to apply changes."
