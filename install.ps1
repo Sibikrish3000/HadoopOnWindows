@@ -155,14 +155,10 @@ function Set-EnvVars {
     [System.Environment]::SetEnvironmentVariable("hadoop.home.dir", $hadoopPath, "Machine")
 
     [System.Environment]::SetEnvironmentVariable("Path", "$env:Path;$jdkPath\bin;$hadoopPath\bin;$hadoopPath\sbin", "Machine")
-    # Set HADOOP_CLASSPATH
-    $hadoopClasspath = & hadoop classpath  # Get classpath
-    [System.Environment]::SetEnvironmentVariable("HADOOP_CLASSPATH", $hadoopClasspath, "Machine")
-
 
     Write-Output "Environment variables set! Restart your system to apply changes."
 }
-function Format-NameNode {
+function DataNode-NameNode {
     # Create necessary directories if they do not exist
     $namenodeDir = "C:\hadoop\data\namenode"
     $datanodeDir = "C:\hadoop\data\datanode"
@@ -173,21 +169,22 @@ function Format-NameNode {
     if (!(Test-Path $datanodeDir)) {
         New-Item -ItemType Directory -Path $datanodeDir -Force
     }
-    # Format the NameNode
-    Write-Host "Formatting Hadoop NameNode..."
-    Start-Process -NoNewWindow -Wait -FilePath "hdfs" -ArgumentList "namenode -format"
 
-    Write-Host "NameNode formatted successfully!"
+    Write-Output "DataNode and NameNode directories created"
 
 }
+function Set-HadoopEnv {
 
+    Start-Process powershell -ArgumentList "-NoExit", "-Command", "& { .\hadoop_classpath.ps1 }"
+    
+}
 # Run installation steps
 Install-JDK
 Install-Hadoop
 Install-Winutils
 Copy-HadoopConfig
 Set-EnvVars
-Format-NameNode
-# Set-HadoopEnv
+DataNode-NameNode
+Set-HadoopEnv
 
 Write-Output "Installation complete! Restart your system to apply changes."
