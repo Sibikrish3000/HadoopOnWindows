@@ -158,7 +158,7 @@ function Set-EnvVars {
 
     Write-Output "Environment variables set! Restart your system to apply changes."
 }
-function DataNode-NameNode {
+function Set-DataNodeNameNode {
     # Create necessary directories if they do not exist
     $namenodeDir = "C:\hadoop\data\namenode"
     $datanodeDir = "C:\hadoop\data\datanode"
@@ -184,7 +184,7 @@ Install-Hadoop
 Install-Winutils
 Copy-HadoopConfig
 Set-EnvVars
-DataNode-NameNode
+Set-DataNodeNameNode
 Set-HadoopEnv
 
 Write-Output "Installation complete! Restart your system to apply changes."
