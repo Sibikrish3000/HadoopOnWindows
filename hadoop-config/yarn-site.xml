@@ -24,6 +24,37 @@
   </property>
 
   <property>
+  <name>yarn.nodemanager.resource.memory-mb</name>
+  <value>4096</value>
+</property>
+
+<property>
+  <name>yarn.nodemanager.disk-health-checker.min-healthy-disks</name>
+  <value>0.0</value>
+</property>
+
+<property>
+  <name>yarn.nodemanager.disk-health-checker.max-disk-utilization-per-disk-percentage</name>
+  <value>99.0</value>
+</property>
+
+<property>
+  <name>yarn.scheduler.capacity.root.default.capacity</name>
+  <value>100</value>
+</property>
+
+<property>
+  <name>yarn.scheduler.capacity.root.default.maximum-capacity</name>
+  <value>100</value>
+</property>
+
+<property>
+  <name>yarn.scheduler.maximum-allocation-mb</name>
+  <value>4096</value>
+</property>
+
+
+  <property>
     <name>yarn.server.nodemanager.address</name>
     <value>0.0.0.0:45454</value>
   </property>

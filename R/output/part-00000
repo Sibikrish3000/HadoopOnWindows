@@ -1,0 +1,7 @@
+	
+# HadoopOnWindows	1
+### Run powershell as administrator then navigate HadoopOnWindows/ folder	1
+./install.ps1	1
+```	4
+cd HadoopOnWindows	1
+git clone https://github.com/Sibikrish3000/HadoopOnWindows.git	1
